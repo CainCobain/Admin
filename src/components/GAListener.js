@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 const hasGAId = !!process.env.REACT_APP_GOOGLE_ANALYTICS;
 
 if (hasGAId) {
-  ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS);
+  ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS, { debug: true });
 }
 
 class GAListener extends React.Component {

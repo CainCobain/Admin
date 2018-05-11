@@ -1,20 +1,17 @@
 import React from 'react';
 
 import { getColor } from 'utils/colors';
-
+import $ from 'jquery';
 import {
   Card,
   CardBody,
   CardHeader,
-  CardTitle,
-  CardGroup,
-  CardDeck,
   Row,
   Col,
   ListGroup,
   ListGroupItem,
   Badge,
-  Button,
+  
 } from 'reactstrap';
 
 import {
@@ -22,50 +19,40 @@ import {
   MdBubbleChart,
   MdPieChart,
   MdShowChart,
-  MdPersonPin,
-  MdRateReview,
-  MdThumbUp,
-  MdShare,
 } from 'react-icons/lib/md';
 
 import InfiniteCalendar from 'react-infinite-calendar';
 
+
 import { Line, Bar } from 'react-chartjs-2';
 
 import {
-  supportTicketsData,
-  productsData,
-  userProgressTableData,
-  avatarsData,
-  todosData,
   chartjs,
 } from 'demos/dashboardPage';
-import { getStackLineChart, stackLineChartOptions } from 'demos/chartjs';
 
 import Page from 'components/Page';
 
-import SupportTicket from 'components/SupportTicket';
-import ProductMedia from 'components/ProductMedia';
-import UserProgressTable from 'components/UserProgressTable';
-
-import { AnnouncementCard, TodosCard } from 'components/Card';
-
-import { NumberWidget, IconWidget } from 'components/Widget';
+import { NumberWidget } from 'components/Widget';
 
 import MapWithBubbles from 'components/MapWithBubbles';
-import HorizontalAvatarList from 'components/HorizontalAvatarList';
+
+import { withRouter } from 'react-router-dom';
 
 const today = new Date();
-const lastWeek = new Date(
+/* const lastWeek = new Date(
   today.getFullYear(),
   today.getMonth(),
   today.getDate() - 7
-);
+); */
 
 class DashboardPage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+    $('.cr-sidebar__content ').show();
+    $('.cr-sidebar ').show();
+    $('.cr-header ').show();
+    $('.cr-app').css('background','#f8f9fa');
   }
 
   render() {
@@ -172,7 +159,7 @@ class DashboardPage extends React.Component {
           </Col>
         </Row>
 
-        <CardGroup style={{ marginBottom: '1rem' }}>
+{/*   <CardGroup style={{ marginBottom: '1rem' }}>
           <IconWidget
             bgColor="white"
             inverse={false}
@@ -194,7 +181,7 @@ class DashboardPage extends React.Component {
             title="30+ Shares"
             subtitle="New Shares"
           />
-        </CardGroup>
+        </CardGroup> 
 
         <Row>
           <Col md="6" sm="12" xs="12">
@@ -315,13 +302,12 @@ class DashboardPage extends React.Component {
               </CardBody>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row>
           <Col lg="4" md="12" sm="12" xs="12">
             <InfiniteCalendar
               selected={today}
-              minDate={lastWeek}
               width="100%"
               theme={{
                 accentColor: primaryColor,
@@ -354,7 +340,7 @@ class DashboardPage extends React.Component {
           </Col>
         </Row>
 
-        <CardDeck style={{ marginBottom: '1rem' }}>
+       {/*  <CardDeck style={{ marginBottom: '1rem' }}>
           <Card body style={{ overflowX: 'auto' }}>
             <HorizontalAvatarList
               avatars={avatarsData}
@@ -369,8 +355,8 @@ class DashboardPage extends React.Component {
               reversed
             />
           </Card>
-        </CardDeck>
-
+        </CardDeck> */}
+{/* 
         <Row>
           <Col lg="4" md="12" sm="12" xs="12">
             <AnnouncementCard
@@ -408,9 +394,9 @@ class DashboardPage extends React.Component {
           <Col lg="4" md="12" sm="12" xs="12">
             <TodosCard todos={todosData} />
           </Col>
-        </Row>
+        </Row> */}
       </Page>
     );
   }
 }
-export default DashboardPage;
+export default withRouter(DashboardPage);

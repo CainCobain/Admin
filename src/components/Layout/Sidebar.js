@@ -11,28 +11,17 @@ import {
   Collapse,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-
+import Footer from './Footer';
 import {
   MdDashboard,
-  MdWidgets,
-  MdTextFields,
-  MdNotificationsActive,
-  MdBorderAll,
-  MdRadioButtonChecked,
-  MdWeb,
-  MdStar,
-  MdGroupWork,
-  MdArrowDropDownCircle,
   MdBrush,
   MdViewDay,
-  MdChromeReaderMode,
-  MdViewList,
   MdInsertChart,
   MdExtension,
-  MdSend,
+  
   MdKeyboardArrowDown,
+  MdPowerInput
 } from 'react-icons/lib/md';
-import FaGithub from 'react-icons/lib/fa/github';
 
 import SourceLink from 'components/SourceLink';
 
@@ -46,37 +35,28 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/buttons', name: 'buttons', exact: false, Icon: MdRadioButtonChecked },
-  {
-    to: '/button-groups',
-    name: 'button groups',
-    exact: false,
-    Icon: MdGroupWork,
+  { to: '/progress', 
+    name: 'progress', 
+    exact: false, 
+    Icon: MdBrush 
   },
-  { to: '/forms', name: 'forms', exact: false, Icon: MdChromeReaderMode },
-  { to: '/input-groups', name: 'input groups', exact: false, Icon: MdViewList },
-  {
-    to: '/dropdowns',
-    name: 'dropdowns',
-    exact: false,
-    Icon: MdArrowDropDownCircle,
-  },
-  { to: '/badges', name: 'badges', exact: false, Icon: MdStar },
-  { to: '/alerts', name: 'alerts', exact: false, Icon: MdNotificationsActive },
-  { to: '/progress', name: 'progress', exact: false, Icon: MdBrush },
-  { to: '/modals', name: 'modals', exact: false, Icon: MdViewDay },
+  { to: '/modals', 
+    name: 'modals', 
+    exact: false, 
+    Icon: MdViewDay 
+  }
 ];
 
-const navContents = [
+/* const navContents = [
   { to: '/typography', name: 'typography', exact: false, Icon: MdTextFields },
   { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
-];
+]; */
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/cards', name: 'cards', exact: false, Icon: MdWeb },
   { to: '/charts', name: 'charts', exact: false, Icon: MdInsertChart },
-  { to: '/widgets', name: 'widgets', exact: false, Icon: MdWidgets },
+  { to: '/article', name: 'nouvel article', exact: false, Icon: MdPowerInput },
+  { to: '/articles', name: 'articles', exact: false, Icon: MdPowerInput },
 ];
 
 const bem = bn.create('sidebar');
@@ -103,16 +83,16 @@ class Sidebar extends React.Component {
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')}>
           <Navbar>
-            <SourceLink className="navbar-brand d-flex">
+          <SourceLink className="navbar-brand d-flex">
               <img
                 src={logo200Image}
                 width="40"
                 height="30"
-                className="pr-2"
+                className="pr-2 rounded-circle"
                 alt=""
               />
               <span className="text-white">
-                Reduction <FaGithub />
+                Maltem Africa
               </span>
             </SourceLink>
           </Navbar>
@@ -174,7 +154,7 @@ class Sidebar extends React.Component {
               ))}
             </Collapse>
 
-            <NavItem
+          {/*  <NavItem
               className={bem.e('nav-item')}
               onClick={this.handleClick('Contents')}>
               <BSNavLink className={bem.e('nav-item-collapse')}>
@@ -196,7 +176,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenContents}>
+             <Collapse isOpen={this.state.isOpenContents}>
               {navContents.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
@@ -211,7 +191,8 @@ class Sidebar extends React.Component {
                   </BSNavLink>
                 </NavItem>
               ))}
-            </Collapse>
+            </Collapse> */}
+            <Footer />
           </Nav>
         </div>
       </aside>

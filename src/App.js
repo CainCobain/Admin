@@ -4,20 +4,16 @@ import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 
 import componentQueries from 'react-component-queries';
 
-import {
-  // MdCardGiftcard,
-  MdLoyalty,
-  MdImportantDevices,
-} from 'react-icons/lib/md';
 import NotificationSystem from 'react-notification-system';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 // layouts
-import { Header, Sidebar, Content, Footer } from 'components/Layout';
+import { Header, Sidebar, Content } from 'components/Layout';
 
 import GAListener from 'components/GAListener';
-
+// firebase auth
+import { fbAuth } from './firebase/firebase'
 // pages
 import DashboardPage from 'pages/DashboardPage';
 import WidgetPage from 'pages/WidgetPage';
@@ -34,10 +30,16 @@ import ModalPage from 'pages/ModalPage';
 import FormPage from 'pages/FormPage';
 import InputGroupPage from 'pages/InputGroupPage';
 import ChartPage from 'pages/ChartPage';
+import AddPost from 'pages/AddPost';
+import GetPosts from 'pages/GetPosts';
+import SignIn from 'pages/SignIn';
+import Updatepost from 'pages/UpdatePost';
 
 import './styles/reduction.css';
 
 class App extends React.Component {
+
+
   static isSidebarOpen() {
     return document
       .querySelector('.cr-sidebar')
@@ -52,25 +54,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.checkBreakpoint(this.props.breakpoint);
-
-    setTimeout(() => {
-      this.notificationSystem.addNotification({
-        title: <MdImportantDevices />,
-        message: 'Welome to Reduction Admin!',
-        level: 'info',
-      });
-    }, 1500);
-
-    setTimeout(() => {
-      this.notificationSystem.addNotification({
-        title: <MdLoyalty />,
-        message:
-          'Reduction is carefully designed template powered by React and Bootstrap4!',
-        level: 'info',
-      });
-    }, 2500);
   }
-
   // close sidebar when
   handleContentClick = event => {
     // close sidebar if sidebar is open and screen size is less than `md`
@@ -107,34 +91,87 @@ class App extends React.Component {
 
     document.querySelector('.cr-sidebar').classList.remove('cr-sidebar--open');
   }
-
+  logedIn() {
+    const userAuth = fbAuth.currentUser;
+    return userAuth;
+  }
   render() {
     return (
       <BrowserRouter basename={process.env.REACT_APP_GITHUB_PAGE_BASE}>
         <GAListener>
           <main className="cr-app bg-light">
+            {/* 
+              <div className="cr-sidebar" style={{width:"0px"}} /> */}
+
             <Sidebar />
             <Content fluid onClick={this.handleContentClick}>
-              <Header />
+            <Header />
+              
               <Switch>
-                <Route exact path="/" component={DashboardPage} />
-                <Route path="/buttons" component={ButtonPage} />
-                <Route path="/cards" component={CardPage} />
-                <Route path="/widgets" component={WidgetPage} />
-                <Route path="/typography" component={TypographyPage} />
-                <Route path="/alerts" component={AlertPage} />
-                <Route path="/tables" component={TablePage} />
-                <Route path="/badges" component={BadgePage} />
-                <Route path="/button-groups" component={ButtonGroupPage} />
-                <Route path="/dropdowns" component={DropdownPage} />
-                <Route path="/progress" component={ProgressPage} />
-                <Route path="/modals" component={ModalPage} />
-                <Route path="/forms" component={FormPage} />
-                <Route path="/input-groups" component={InputGroupPage} />
-                <Route path="/charts" component={ChartPage} />
-                <Redirect to="/" />
+                
+        
+              <Route exact path="/" 
+                          render={() => (
+                            !this.logedIn() ? (
+                              <Redirect to="/signin"/>
+                            ) : (
+                              <DashboardPage />
+                            )
+                          )}
+              />
+              <Route path="/buttons" component={ButtonPage} />
+              <Route path="/cards" component={CardPage} />
+              <Route path="/widgets" component={WidgetPage} />
+              <Route path="/typography" component={TypographyPage} />
+              <Route path="/alerts" component={AlertPage} />
+              <Route path="/tables" component={TablePage} />
+              <Route path="/badges" component={BadgePage} />
+              <Route path="/button-groups" component={ButtonGroupPage} />
+              <Route path="/dropdowns" component={DropdownPage} />
+              <Route path="/progress" component={ProgressPage} />
+              <Route path="/modals" component={ModalPage} />
+              <Route path="/forms" component={FormPage} />
+              <Route path="/input-groups" component={InputGroupPage} />
+              <Route path="/charts" component={ChartPage} onEnter={this.requireAuth}/>
+              <Route path="/article" 
+                     render={() => (
+                        !this.logedIn() ? (
+                          <Redirect to="/signin"/>
+                        ) : (
+                          <AddPost />
+                        )
+                      )}
+               />
+              <Route path="/articles"  
+                    render={() => (
+                      !this.logedIn() ? (
+                        <Redirect to="/signin"/>
+                      ) : (
+                        <GetPosts /> 
+                      )
+                    )}
+              />
+             <Route path="/signin"
+                    render={() => (
+                      this.logedIn() ? (
+                        <Redirect to="/"/>
+                      ) : (
+                        <SignIn />
+                      )
+                    )} 
+              />
+              <Route path="/:id/edit" 
+                    render={() =>(
+                      !this.logedIn() ? (
+                        <Redirect to="/signin"/>
+                      ) : (
+                        <Updatepost />
+                      )
+                    )} />
+
+              
               </Switch>
-              <Footer />
+              
             </Content>
 
             <NotificationSystem

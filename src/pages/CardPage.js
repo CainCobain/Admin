@@ -12,7 +12,7 @@ import {
   ListGroupItem,
   Row,
   Col,
-  Button,
+  Button
 } from 'reactstrap';
 
 import { Line } from 'react-chartjs-2';
@@ -106,9 +106,10 @@ const CardPage = () => {
       </Row>
 
       <Row>
-        {['', 'top', 'left', 'right'].map(color => (
-          <Col md={6} sm={6} xs={12} className="mb-3">
+        {['', 'top', 'left', 'right'].map((color,key) => (
+          <Col md={6} sm={6} xs={12} className="mb-3" key={key}>
             <Card
+            
               inverse
               className={`border-0 bg-gradient-theme${
                 !!color ? '-' : ''
@@ -133,9 +134,9 @@ const CardPage = () => {
       </Row>
 
       <Row>
-        {overlayCards.map(({ imgUrl }) => {
+        {overlayCards.map(({ imgUrl },key) => {
           return (
-            <Col md={6} sm={6} xs={12}>
+            <Col md={6} sm={6} xs={12} key={key}>
               <Card inverse className="text-center">
                 <CardImg width="100%" src={imgUrl} alt="Card image cap" />
                 <CardImgOverlay>
@@ -191,8 +192,8 @@ const CardPage = () => {
       </Row>
 
       <Row>
-        {bgCards.map(({ color }) => (
-          <Col lg={4} md={6} sm={6} xs={12} className="mb-3">
+        {bgCards.map(({ color },key) => (
+          <Col lg={4} md={6} sm={6} xs={12} className="mb-3" key={key}>
             <Card inverse color={color}>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -209,8 +210,8 @@ const CardPage = () => {
       </Row>
 
       <Row>
-        {gradientCards.map(({ color }) => (
-          <Col lg={4} md={6} sm={6} xs={12} className="mb-3">
+        {gradientCards.map(({ color },key) => (
+          <Col lg={4} md={6} sm={6} xs={12} className="mb-3" key={key}>
             <Card
               inverse
               className={`bg-gradient-${color} text-center`}

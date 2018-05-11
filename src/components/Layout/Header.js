@@ -1,10 +1,8 @@
 import React from 'react';
-
 import bn from 'utils/bemnames';
-
+import { withRouter } from 'react-router-dom';
 import {
   Navbar,
-  // NavbarToggler,
   Nav,
   NavItem,
   NavLink,
@@ -16,48 +14,37 @@ import {
 } from 'reactstrap';
 
 import {
-  MdNotificationsActive,
-  MdNotificationsNone,
-  MdInsertChart,
-  MdPersonPin,
-  MdMessage,
   MdSettingsApplications,
-  MdHelp,
   MdClearAll,
   MdExitToApp,
 } from 'react-icons/lib/md';
-
+import $ from 'jquery';
 import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
-import Notifications from 'components/Notifications';
+import { fbAuth } from '../../firebase/firebase';
 import SearchInput from 'components/SearchInput';
-
-import withBadge from 'hocs/withBadge';
-
-import { notificationsData } from 'demos/header';
 
 const bem = bn.create('header');
 
-const MdNotificationsActiveWithBadge = withBadge({
-  size: 'md',
-  color: 'primary',
-  style: {
-    top: -10,
-    right: -10,
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  children: <small>5</small>,
-})(MdNotificationsActive);
-
 class Header extends React.Component {
+  constructor(){
+    super();
+    this.logout = this.logout.bind(this);
+  }
+
   state = {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: false,
     isOpenUserCardPopover: false,
   };
 
+  logout(){
+    
+    fbAuth.signOut().then(()=>{
+      $('.popover').hide();
+      this.props.history.push('/signin');
+    });
+  }
   toggleNotificationPopover = () => {
     this.setState({
       isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
@@ -82,7 +69,6 @@ class Header extends React.Component {
   };
 
   render() {
-    const { isNotificationConfirmed } = this.state;
 
     return (
       <Navbar light expand className={bem.b('bg-white')}>
@@ -96,33 +82,6 @@ class Header extends React.Component {
         </Nav>
 
         <Nav navbar className={bem.e('nav-right')}>
-          <NavItem className="d-inline-flex">
-            <NavLink id="Popover1" className="position-relative">
-              {isNotificationConfirmed ? (
-                <MdNotificationsNone
-                  size={25}
-                  className="text-secondary can-click"
-                  onClick={this.toggleNotificationPopover}
-                />
-              ) : (
-                <MdNotificationsActiveWithBadge
-                  size={25}
-                  className="text-secondary can-click animated swing infinite"
-                  onClick={this.toggleNotificationPopover}
-                />
-              )}
-            </NavLink>
-            <Popover
-              placement="bottom"
-              isOpen={this.state.isOpenNotificationPopover}
-              toggle={this.toggleNotificationPopover}
-              target="Popover1">
-              <PopoverBody>
-                <Notifications notificationsData={notificationsData} />
-              </PopoverBody>
-            </Popover>
-          </NavItem>
-
           <NavItem>
             <NavLink id="Popover2">
               <Avatar
@@ -141,25 +100,13 @@ class Header extends React.Component {
                 <UserCard
                   title="Jane"
                   subtitle="jane@jane.com"
-                  text="Last updated 3 mins ago"
+                  text="Bienvenu sur votre espace Admin"
                   className="border-light">
                   <ListGroup flush>
                     <ListGroupItem tag="button" action className="border-light">
-                      <MdPersonPin /> Profile
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
                       <MdSettingsApplications /> Settings
                     </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
+                    <ListGroupItem tag="button" action className="border-light" onClick={this.logout}>
                       <MdExitToApp /> Signout
                     </ListGroupItem>
                   </ListGroup>
@@ -173,4 +120,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

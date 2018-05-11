@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import userImage from 'assets/img/logo/logo_200.png';
 
-const Avatar = ({
+const Logo = ({
   rounded,
   circle,
   src,
@@ -19,14 +19,14 @@ const Avatar = ({
   return (
     <Tag
       src={src}
-      style={{ width: size, height: size, ...style }}
+      style={{ ...style }}
       className={classes}
       {...restProps}
     />
   );
 };
 
-Avatar.propTypes = {
+Logo.propTypes = {
   tag: PropTypes.component,
   rounded: PropTypes.bool,
   circle: PropTypes.bool,
@@ -35,13 +35,18 @@ Avatar.propTypes = {
   style: PropTypes.object,
 };
 
-Avatar.defaultProps = {
+Logo.defaultProps = {
   tag: 'img',
   rounded: false,
   circle: true,
   size: 40,
   src: userImage,
-  style: {},
+  style: {
+      margin: '10% 30% 10% 30%',
+      boxShadow: '-2px -1px #8888',
+      width: '35%',
+      height: '35%'
+        },
 };
 
-export default Avatar;
+export default Logo;

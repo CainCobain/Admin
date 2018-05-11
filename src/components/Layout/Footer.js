@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { Navbar, Nav, NavItem } from 'reactstrap';
-
-import SourceLink from 'components/SourceLink';
+import { NavItem } from 'reactstrap';
 
 const Footer = () => {
+  
   return (
-    <Navbar>
-      <Nav navbar>
-        <NavItem>
-          2018 Reduction theme, source on <SourceLink>Github</SourceLink>
+  
+        <NavItem style={{position:"absolute",bottom:"0px"}}>
+          © Maltem Africa 2018
         </NavItem>
-      </Nav>
-    </Navbar>
+
   );
 };
 
