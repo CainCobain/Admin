@@ -37,6 +37,10 @@ import Updatepost from 'pages/UpdatePost';
 
 import './styles/reduction.css';
 
+const getBasename = () => {
+  return `/${process.env.PUBLIC_URL.split('/').pop()}`;
+};
+
 class App extends React.Component {
 
 
@@ -97,7 +101,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <BrowserRouter basename={process.env.REACT_APP_GITHUB_PAGE_BASE}>
+      <BrowserRouter basename={getBasename()}>
         <GAListener>
           <main className="cr-app bg-light">
             {/* 

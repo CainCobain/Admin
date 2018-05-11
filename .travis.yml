@@ -1,10 +1,9 @@
 language: node_js
 
 node_js:
-  - "stable"
+  - 9
 
 cache:
-  yarn: true
   directories:
   - node_modules
 
@@ -18,5 +17,9 @@ deploy:
   provider: pages
   skip_cleanup: true
   github-token: $GITHUB_TOKEN
+  keep-history: true
+  email: simsim0709@gmail.com
+  name: Ilkwon Sim
+  local-dir: build
   on:
     branch: master
